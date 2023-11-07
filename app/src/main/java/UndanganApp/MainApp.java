@@ -7,11 +7,13 @@ package UndanganApp;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.awt.Frame;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,6 +37,10 @@ public class MainApp extends javax.swing.JFrame {
 
         refreshList();
         refreshtable();
+    }
+    
+    public String getGreeting() {
+        return "Hello World!";
     }
 
     /**
@@ -354,8 +360,7 @@ public class MainApp extends javax.swing.JFrame {
             String data = id;
             String path = id + ".png";
             String charset = "UTF-8";
-            Map<EncodeHintType, ErrorCorrectionLevel> hashMap
-                    = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+            Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<>();
 
             hashMap.put(EncodeHintType.ERROR_CORRECTION,
                     ErrorCorrectionLevel.L);
@@ -368,8 +373,8 @@ public class MainApp extends javax.swing.JFrame {
                 MatrixToImageWriter.writeToFile(
                         matrix,
                         path.substring(path.lastIndexOf('.') + 1),
-                        new File(path));
-            } catch (Exception e) {
+                        new File("QR/"+path));
+            } catch (WriterException | IOException e) {
             }
 
         }
